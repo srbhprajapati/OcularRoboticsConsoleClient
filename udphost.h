@@ -6,7 +6,12 @@
 class UdpHost : public QObject
 {
     public:
+
+        //Constructor
         UdpHost();
+
+        //Destructor
+        ~UdpHost();
 
         //Sends datagram for Full Field Scan mode
         bool setFullFieldScan(int Azimuthal_value, int Scanline_value);

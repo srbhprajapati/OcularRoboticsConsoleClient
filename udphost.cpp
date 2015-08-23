@@ -10,6 +10,11 @@ UdpHost::UdpHost()
     socket = new QUdpSocket(this);
 }
 
+UdpHost::~UdpHost()
+{
+    socket->~QUdpSocket();
+}
+
 
 bool UdpHost::setFullFieldScan(int Azimuthal_value, int Scanline_value)
 {

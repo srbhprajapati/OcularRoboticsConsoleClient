@@ -10,29 +10,22 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
 
-    socket = new QUdpSocket(this);
-
-    //Bind Socket to an Address
-    if(!socket->bind(QHostAddress::Any, 1235))
-    {
-        qDebug()<<"Unable to connect to Server";
-    }
-
-    QObject::connect(socket, SIGNAL(readyRead()),
-                     this, SLOT(readPendingDatagrams()));
-
-
-
     QObject::connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(on_openAction_clicked()));
 
 
-    _udp = new UdpHost();
+    _udpSender = new UdpHost();
+
+    _udpReceiver = new UdpReceiver();
 
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+
+    _udpSender->~UdpHost();
+
+    _udpReceiver->~UdpReceiver();
 }
 
 
@@ -48,7 +41,7 @@ void MainWindow::on_startLaserButton_clicked()
 
     //For starting the rendering in ClientGLWidget
     //ui->widget->start_laser(Azimuthal_value, Scanline_value);
-    _udp->runLaserSensor(Azimuthal_value, Scanline_value);
+    _udpSender->runLaserSensor(Azimuthal_value, Scanline_value);
 
 
     //Set Value to Other Text Labels
@@ -75,7 +68,7 @@ void MainWindow::on_stopLaserButton_clicked()
 {
     //For stopping the rendering in ClientGLWidget
     //ui->widget->stopLaserSensor();
-    _udp->stopLaserSensor();
+    _udpSender->stopLaserSensor();
 
     //Set Value to Other Text Labels
     ui->LaserStatusLabel->setText(QString("OFF"));
@@ -94,7 +87,7 @@ void MainWindow::on_fullScanModeButton_clicked()
 
     //call Full Field Scan method in ClientGLWidget
     //ui->widget->setFullFieldScan(Azimuthal_value, Scanline_value);
-    _udp->setFullFieldScan(Azimuthal_value, Scanline_value);
+    _udpSender->setFullFieldScan(Azimuthal_value, Scanline_value);
 
     //Set Value to Other Text Labels
     ui->scanModeValueLabel->setText(QString("FS"));
@@ -120,7 +113,7 @@ void MainWindow::on_boundedElevationModeButton_clicked()
 
     //call Bounded Elevation Scan method in ClientGLWidget
     //ui->widget->setBoundedElevationScan(Azimuthal_value, Scanline_value, upper_bound, lower_bound);
-    _udp->setBoundedElevationScan(Azimuthal_value, Scanline_value, upper_bound, lower_bound);
+    _udpSender->setBoundedElevationScan(Azimuthal_value, Scanline_value, upper_bound, lower_bound);
 
     //Set Value to Other Text Labels
     ui->scanModeValueLabel->setText(QString("BES"));
@@ -140,7 +133,7 @@ void MainWindow::on_regionScanModeButton_clicked()
 
     //call Bounded Elevation Scan method in ClientGLWidget
     //ui->widget->setRegionScan(Azimuthal_value, Scanline_value, upper_bound, lower_bound, lAngular, rAngular);
-    _udp->setRegionScan(Azimuthal_value, Scanline_value, upper_bound, lower_bound, lAngular, rAngular);
+    _udpSender->setRegionScan(Azimuthal_value, Scanline_value, upper_bound, lower_bound, lAngular, rAngular);
 
     //Set Value to Other Text Labels
     ui->scanModeValueLabel->setText(QString("RS"));
@@ -156,26 +149,7 @@ void MainWindow::on_openAction_clicked()
     if(!filename.isEmpty())
     {
         //ui->widget->openModel(filename);
-        _udp->openModel(filename);
-    }
-
-}
-
-
-void MainWindow::readPendingDatagrams()
-{
-    //while data is available
-    while (socket->hasPendingDatagrams()) {
-        QByteArray datagram;
-        datagram.resize(socket->pendingDatagramSize());
-        QHostAddress sender = QHostAddress::LocalHost;
-        quint16 senderPort = 1235;
-
-        socket->readDatagram(datagram.data(), datagram.size(),
-                                &sender, &senderPort);
-
-        //render the data
-        //ui->widget->updateScene(datagram);
+        _udpSender->openModel(filename);
     }
 
 }
@@ -189,7 +163,7 @@ void MainWindow::on_actionSave_triggered()
     if(!filename.isEmpty())
     {
         //ui->widget->saveModel(filename);
-        _udp->saveModel(filename);
+        _udpSender->saveModel(filename);
     }
 
 }

@@ -14,9 +14,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp\
-        udphost.cpp
+        udphost.cpp \
+    udpreceiver.cpp
 
 HEADERS  += mainwindow.h\
-            udphost.h
+            udphost.h \
+    udpreceiver.h
 
 FORMS    += mainwindow.ui

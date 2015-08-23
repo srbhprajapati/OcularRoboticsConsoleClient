@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QtNetwork/QUdpSocket>
 #include "udphost.h"
+#include "udpreceiver.h"
 
 namespace Ui {
 class MainWindow;
@@ -20,12 +21,6 @@ public:
 
     //Destructor
     ~MainWindow();
-
-public slots:
-
-    //reads pending datagram sent by another Program at
-    // a particular port
-    void readPendingDatagrams();
 
 private slots:
 
@@ -56,10 +51,9 @@ private:
     //Pointer to the designer form
     Ui::MainWindow *ui;
 
-    //Socket for receiving sensed data from server
-    QUdpSocket *socket;
+    UdpHost *_udpSender;
 
-    UdpHost *_udp;
+    UdpReceiver *_udpReceiver;
 };
 
 #endif // MAINWINDOW_H
