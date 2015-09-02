@@ -1,5 +1,7 @@
 #include "udpreceiver.h"
 
+#define RECEIVING_PORT 1235
+#define RECEIVING_IP	QHostAddress::LocalHost
 #define PIBY2 1.57142857143
 
 UdpReceiver::UdpReceiver()
@@ -24,21 +26,46 @@ UdpReceiver::~UdpReceiver()
 }
 
 
-
-
 void UdpReceiver::readPendingDatagrams()
 {
     //while data is available
-    while (socket->hasPendingDatagrams()) {
+    while (socket->hasPendingDatagrams())
+    {
         QByteArray datagram;
         datagram.resize(socket->pendingDatagramSize());
-        QHostAddress sender = QHostAddress::LocalHost;
-        quint16 senderPort = 1235;
+        QHostAddress sender = RECEIVING_IP;
+        quint16 senderPort = RECEIVING_PORT;
 
         socket->readDatagram(datagram.data(), datagram.size(),
                                 &sender, &senderPort);
 
-        parseDatagram(datagram);
+
+        //Read Packet Header
+        std::string packetHeader(datagram.constData(), 6);
+        if(packetHeader.compare("EARNLS")==0)
+        {
+            emit ackRunLaser();
+        }
+        else if(packetHeader.compare("EASTLS")==0)
+        {
+            emit ackStopLaser();
+        }
+        else if(packetHeader.compare("EASFFS")==0)
+        {
+            emit ackFullScanMode();
+        }
+        else if(packetHeader.compare("EASBES")==0)
+        {
+            emit ackBoundedElevation();
+        }
+        else if(packetHeader.compare("EASRES")==0)
+        {
+            emit ackRegionScan();
+        }
+        else
+        {
+            parseDatagram(datagram);
+        }
     }
 
 }

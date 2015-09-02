@@ -16,6 +16,17 @@ class MainWindow : public QMainWindow
 
 public:
 
+    enum LASER_STATUS{
+        ON,
+        OFF
+    };
+
+    enum SCAN_MODE{
+        FULL_FIELD_SCAN,
+        BOUNDED_ELEVATION_SCAN,
+        REGION_SCAN
+    };
+
     //Constructor
     explicit MainWindow(QWidget *parent = 0);
 
@@ -46,6 +57,24 @@ private slots:
 
     void on_actionSave_triggered();
 
+
+    //Acknowledgement for Start Laser
+    void ackRunLaser();
+
+    //Acknowledgement for Stop Laser
+    void ackStopLaser();
+
+    //Acknowledgement for Full Scan Mode
+    void ackFullScanMode();
+
+    //Acknowledgement for Bounded Elevation Scan Mode
+    void ackBoundedElevation();
+
+    //Acknowledgement for Region Scan Mode
+    void ackRegionScan();
+
+
+
 private:
 
     //Pointer to the designer form
@@ -54,6 +83,41 @@ private:
     UdpHost *_udpSender;
 
     UdpReceiver *_udpReceiver;
+
+    int _samplingFrequency;
+    int _tempSamplingFrequency;
+
+    int _totalPoints;
+    int _tempTotalPoints;
+
+    float _maximumRange;
+    float _tempMaximumRange;
+
+    int _azimuthalFrequency;
+    int _tempAzimuthalFrequency;
+
+    int _numberScanline;
+    int _tempNumberScanline;
+
+    LASER_STATUS _sensorStatus;
+    LASER_STATUS _tempSensorStatus;
+
+    SCAN_MODE _sensorScanMode;
+    SCAN_MODE _tempSensorScanMode;
+
+    float _upperBound;
+    float _tempUpperBound;
+
+    float _lowerBound;
+    float _tempLowerBound;
+
+    float _lAngular;
+    float _tempLAngular;
+
+    float _rAngular;
+    float _tempRAngular;
+
+    float _laserSensorPosition[3];
 };
 
 #endif // MAINWINDOW_H

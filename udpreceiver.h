@@ -23,6 +23,23 @@ class UdpReceiver : public QObject
         // a particular port
         void readPendingDatagrams();
 
+    signals:
+
+        //Acknowledgement for Start Laser
+        void ackRunLaser();
+
+        //Acknowledgement for Stop Laser
+        void ackStopLaser();
+
+        //Acknowledgement for Full Scan Mode
+        void ackFullScanMode();
+
+        //Acknowledgement for Bounded Elevation Scan Mode
+        void ackBoundedElevation();
+
+        //Acknowledgement for Region Scan Mode
+        void ackRegionScan();
+
 
     private:
 

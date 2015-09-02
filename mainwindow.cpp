@@ -17,6 +17,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     _udpReceiver = new UdpReceiver();
 
+    QObject::connect(_udpReceiver, SIGNAL(ackRunLaser()), this, SLOT(ackRunLaser()));
+    QObject::connect(_udpReceiver, SIGNAL(ackStopLaser()), this, SLOT(ackStopLaser()));
+    QObject::connect(_udpReceiver, SIGNAL(ackFullScanMode()), this, SLOT(ackFullScanMode()));
+    QObject::connect(_udpReceiver, SIGNAL(ackBoundedElevation()), this, SLOT(ackBoundedElevation()));
+    QObject::connect(_udpReceiver, SIGNAL(ackRegionScan()), this, SLOT(ackRegionScan()));
 }
 
 MainWindow::~MainWindow()
@@ -43,24 +48,9 @@ void MainWindow::on_startLaserButton_clicked()
     //ui->widget->start_laser(Azimuthal_value, Scanline_value);
     _udpSender->runLaserSensor(Azimuthal_value, Scanline_value);
 
+    _tempAzimuthalFrequency = Azimuthal_value;
+    _tempNumberScanline = Scanline_value;
 
-    //Set Value to Other Text Labels
-    ui->AzimuthalFullScanLabel->setText(QString::number(Azimuthal_value));
-    ui->AzimuthalFreqLabel->setText(QString::number(Azimuthal_value));
-
-    ui->ScanLineFullScanLabel->setText(QString::number(Scanline_value));
-    ui->scanLinesValueLabel->setText(QString::number(Scanline_value));
-
-    ui->samplingFreqValueLabel->setText(QString::number(5000));
-    ui->TotalPointsValueLabel->setText(QString::number(100000));
-    ui->LaserXValueLabel->setText(QString::number(ui->LaserXSpinBox->value()));
-    ui->LaserYValueLabel->setText(QString::number(ui->LaserYSpinBox->value()));
-    ui->LaserZValueLabel->setText(QString::number(ui->LaserZSpinBox->value()));
-
-    ui->maxRangeValueLabel->setText(QString::number(10.0));
-
-    ui->scanModeValueLabel->setText(QString("FS"));
-    ui->LaserStatusLabel->setText(QString("ON"));
 
 }
 
@@ -70,8 +60,6 @@ void MainWindow::on_stopLaserButton_clicked()
     //ui->widget->stopLaserSensor();
     _udpSender->stopLaserSensor();
 
-    //Set Value to Other Text Labels
-    ui->LaserStatusLabel->setText(QString("OFF"));
 }
 
 
@@ -89,14 +77,10 @@ void MainWindow::on_fullScanModeButton_clicked()
     //ui->widget->setFullFieldScan(Azimuthal_value, Scanline_value);
     _udpSender->setFullFieldScan(Azimuthal_value, Scanline_value);
 
-    //Set Value to Other Text Labels
-    ui->scanModeValueLabel->setText(QString("FS"));
+    _tempAzimuthalFrequency = Azimuthal_value;
+    _tempNumberScanline = Scanline_value;
 
-    ui->AzimuthalFullScanLabel->setText(QString::number(Azimuthal_value));
-    ui->AzimuthalFreqLabel->setText(QString::number(Azimuthal_value));
 
-    ui->ScanLineFullScanLabel->setText(QString::number(Scanline_value));
-    ui->scanLinesValueLabel->setText(QString::number(Scanline_value));
 }
 
 
@@ -115,8 +99,13 @@ void MainWindow::on_boundedElevationModeButton_clicked()
     //ui->widget->setBoundedElevationScan(Azimuthal_value, Scanline_value, upper_bound, lower_bound);
     _udpSender->setBoundedElevationScan(Azimuthal_value, Scanline_value, upper_bound, lower_bound);
 
-    //Set Value to Other Text Labels
-    ui->scanModeValueLabel->setText(QString("BES"));
+
+    _tempAzimuthalFrequency = Azimuthal_value;
+    _tempNumberScanline = Scanline_value;
+    _tempUpperBound = upper_bound;
+    _tempLowerBound = lower_bound;
+
+
 }
 
 void MainWindow::on_regionScanModeButton_clicked()
@@ -135,8 +124,15 @@ void MainWindow::on_regionScanModeButton_clicked()
     //ui->widget->setRegionScan(Azimuthal_value, Scanline_value, upper_bound, lower_bound, lAngular, rAngular);
     _udpSender->setRegionScan(Azimuthal_value, Scanline_value, upper_bound, lower_bound, lAngular, rAngular);
 
-    //Set Value to Other Text Labels
-    ui->scanModeValueLabel->setText(QString("RS"));
+
+    _tempAzimuthalFrequency = Azimuthal_value;
+    _tempNumberScanline = Scanline_value;
+    _tempUpperBound = upper_bound;
+    _tempLowerBound = lower_bound;
+    _tempLAngular = lAngular;
+    _tempRAngular = rAngular;
+
+
 }
 
 
@@ -166,4 +162,103 @@ void MainWindow::on_actionSave_triggered()
         _udpSender->saveModel(filename);
     }
 
+}
+
+
+void MainWindow::ackRunLaser()
+{
+
+    _azimuthalFrequency = _tempAzimuthalFrequency;
+    _numberScanline = _tempNumberScanline;
+
+    //Azimuthal Frequency
+    ui->AzimuthalFullScanLabel->setText(QString::number(_tempAzimuthalFrequency));
+    ui->AzimuthalFreqLabel->setText(QString::number(_tempAzimuthalFrequency));
+
+    //Number of Scanlines
+    ui->ScanLineFullScanLabel->setText(QString::number(_tempNumberScanline));
+    ui->scanLinesValueLabel->setText(QString::number(_tempNumberScanline));
+
+    //Sampling Frequency
+    ui->samplingFreqValueLabel->setText(QString::number(5000));
+    _samplingFrequency = 5000;
+
+    //Total Number of Points
+    ui->TotalPointsValueLabel->setText(QString::number(100000));
+    _totalPoints = 100000;
+
+    //Sensor Position
+    ui->LaserXValueLabel->setText(QString::number(ui->LaserXSpinBox->value()));
+    ui->LaserYValueLabel->setText(QString::number(ui->LaserYSpinBox->value()));
+    ui->LaserZValueLabel->setText(QString::number(ui->LaserZSpinBox->value()));
+    _laserSensorPosition[0] = ui->LaserXSpinBox->value();
+    _laserSensorPosition[1] = ui->LaserYSpinBox->value();
+    _laserSensorPosition[2] = ui->LaserZSpinBox->value();
+
+
+    //Maximum Range of the Sensor
+    ui->maxRangeValueLabel->setText(QString::number(10.0));
+    _maximumRange = 10.0;
+
+    //Scan Mode for the Sensor
+    ui->scanModeValueLabel->setText(QString("FS"));
+    _sensorScanMode = SCAN_MODE::FULL_FIELD_SCAN;
+
+    //Laser Sensor Status
+    ui->LaserStatusLabel->setText(QString("ON"));
+    _sensorStatus = LASER_STATUS::ON;
+
+}
+
+void MainWindow::ackStopLaser()
+{
+    //Set Value to Other Text Labels
+    ui->LaserStatusLabel->setText(QString("OFF"));
+    _sensorStatus = LASER_STATUS::OFF;
+}
+
+void MainWindow::ackFullScanMode()
+{
+
+    _azimuthalFrequency = _tempAzimuthalFrequency;
+    _numberScanline = _tempNumberScanline;
+
+    //Set Value to Other Text Labels
+    ui->scanModeValueLabel->setText(QString("FS"));
+    _sensorScanMode = SCAN_MODE::FULL_FIELD_SCAN;
+
+    ui->AzimuthalFullScanLabel->setText(QString::number(_tempAzimuthalFrequency));
+    ui->AzimuthalFreqLabel->setText(QString::number(_tempAzimuthalFrequency));
+
+    ui->ScanLineFullScanLabel->setText(QString::number(_tempNumberScanline));
+    ui->scanLinesValueLabel->setText(QString::number(_tempNumberScanline));
+}
+
+void MainWindow::ackBoundedElevation()
+{
+
+    _azimuthalFrequency = _tempAzimuthalFrequency;
+    _numberScanline = _tempNumberScanline;
+    _upperBound = _tempUpperBound;
+    _lowerBound = _tempLowerBound;
+
+    //Set Value to Other Text Labels
+    ui->scanModeValueLabel->setText(QString("BES"));
+    _sensorScanMode = SCAN_MODE::BOUNDED_ELEVATION_SCAN;
+
+}
+
+void MainWindow::ackRegionScan()
+{
+
+    _azimuthalFrequency = _tempAzimuthalFrequency;
+    _numberScanline = _tempNumberScanline;
+    _upperBound = _tempUpperBound;
+    _lowerBound = _tempLowerBound;
+    _lAngular = _tempLAngular;
+    _rAngular = _tempRAngular;
+
+    //Set Value to Other Text Labels
+    ui->scanModeValueLabel->setText(QString("RS"));
+    _sensorScanMode = SCAN_MODE::REGION_SCAN;
 }
