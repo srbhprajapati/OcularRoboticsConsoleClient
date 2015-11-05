@@ -40,6 +40,8 @@ class UdpReceiver : public QObject
         //Acknowledgement for Region Scan Mode
         void ackRegionScan();
 
+        //Acknowledgement for Laser Sensor Position
+        void ackLaserSensorPosition();
 
     private:
 

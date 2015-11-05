@@ -281,3 +281,67 @@ bool UdpHost::saveModel(QString filename)
     if(bytesWritten==-1) return false;
     else return true;
 }
+
+
+
+bool UdpHost::setLaserSensorPosition(float x, float y, float z, float roll, float pitch, float yaw)
+{
+
+    //send UDP packet to start Region Scan
+    char* dataPacket = new char[30];
+
+    //Header
+    memcpy(dataPacket, "RECHLP", 6);
+
+    //X
+    unsigned int xVal =  *((int*)&x);
+    unsigned char* xChar = new unsigned char[4];
+    _intToChar(xVal, xChar);
+    char* xCharBytes = reinterpret_cast<char*>(xChar);
+    memcpy(dataPacket+6, xCharBytes, 4);
+
+    //Y
+    unsigned int yVal =  *((int*)&y);
+    unsigned char* yChar = new unsigned char[4];
+    _intToChar(yVal, yChar);
+    char* yCharBytes = reinterpret_cast<char*>(yChar);
+    memcpy(dataPacket+10, yCharBytes, 4);
+
+    //Z
+    unsigned int zVal =  *((int*)&z);
+    unsigned char* zChar = new unsigned char[4];
+    _intToChar(zVal, zChar);
+    char* zCharBytes = reinterpret_cast<char*>(zChar);
+    memcpy(dataPacket+14, zCharBytes, 4);
+
+    //roll
+    unsigned int rollVal =  *((int*)&roll);
+    unsigned char* rollChar = new unsigned char[4];
+    _intToChar(rollVal, rollChar);
+    char* rollCharBytes = reinterpret_cast<char*>(rollChar);
+    memcpy(dataPacket+18, rollCharBytes, 4);
+
+
+    //pitch
+    unsigned int pitchVal =  *((int*)&pitch);
+    unsigned char* pitchChar = new unsigned char[4];
+    _intToChar(pitchVal, pitchChar);
+    char* pitchCharBytes = reinterpret_cast<char*>(pitchChar);
+    memcpy(dataPacket+22, pitchCharBytes, 4);
+
+
+    //Yaw
+    unsigned int yawVal =  *((int*)&yaw);
+    unsigned char* yawChar = new unsigned char[4];
+    _intToChar(yawVal, yawChar);
+    char* yawCharBytes = reinterpret_cast<char*>(yawChar);
+    memcpy(dataPacket+26, yawCharBytes, 4);
+
+    const char* finalDataPacket = &dataPacket[0];
+
+    int bytesWritten = socket->writeDatagram(finalDataPacket, 30, LOCALHOST_IP, LOCALHHOST_PORT);
+
+    if(bytesWritten==-1) return false;
+    else return true;
+
+}

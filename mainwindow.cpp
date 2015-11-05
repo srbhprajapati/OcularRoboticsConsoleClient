@@ -22,6 +22,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(_udpReceiver, SIGNAL(ackFullScanMode()), this, SLOT(ackFullScanMode()));
     QObject::connect(_udpReceiver, SIGNAL(ackBoundedElevation()), this, SLOT(ackBoundedElevation()));
     QObject::connect(_udpReceiver, SIGNAL(ackRegionScan()), this, SLOT(ackRegionScan()));
+    QObject::connect(_udpReceiver, SIGNAL(ackLaserSensorPosition()), this, SLOT(ackLaserSensorPosition()));
+
 }
 
 MainWindow::~MainWindow()
@@ -136,15 +138,11 @@ void MainWindow::on_regionScanModeButton_clicked()
 }
 
 
-//Funtion not used currently
-//Reason : this function is intentionally no working because it makes
-//          more sense to change the model from server only.
 void MainWindow::on_openAction_clicked()
 {
     QString filename = QFileDialog::getOpenFileName(this, tr("Open File"), "C:/", tr("Data Files( *.obj *.ply)"));
     if(!filename.isEmpty())
     {
-        //ui->widget->openModel(filename);
         _udpSender->openModel(filename);
     }
 
@@ -158,7 +156,6 @@ void MainWindow::on_actionSave_triggered()
 
     if(!filename.isEmpty())
     {
-        //ui->widget->saveModel(filename);
         _udpSender->saveModel(filename);
     }
 
@@ -262,3 +259,34 @@ void MainWindow::ackRegionScan()
     ui->scanModeValueLabel->setText(QString("RS"));
     _sensorScanMode = SCAN_MODE::REGION_SCAN;
 }
+
+void MainWindow::ackLaserSensorPosition()
+{
+    _laserSensorPosition[0] = _tempLaserSensorPosition[0];
+    _laserSensorPosition[1] = _tempLaserSensorPosition[1];
+    _laserSensorPosition[2] = _tempLaserSensorPosition[2];
+
+    _laserSensorOrientation[0] = _tempLaserSensorOrientation[0];
+    _laserSensorOrientation[1] = _tempLaserSensorOrientation[1];
+    _laserSensorOrientation[2] = _tempLaserSensorOrientation[2];
+}
+
+void MainWindow::on_LaserPositionButton_clicked()
+{
+    _tempLaserSensorPosition[0] = ui->LaserXSpinBox->value();
+    _tempLaserSensorPosition[1] = ui->LaserYSpinBox->value();
+    _tempLaserSensorPosition[2] = ui->LaserZSpinBox->value();
+
+    _tempLaserSensorOrientation[0] = ui->RollSpinBox->value();
+    _tempLaserSensorOrientation[1] = ui->PitchSpinBox->value();
+    _tempLaserSensorOrientation[2] = ui->YawSpinBox->value();
+
+    _udpSender->setLaserSensorPosition(_tempLaserSensorPosition[0],
+                                       _tempLaserSensorPosition[1],
+                                       _tempLaserSensorPosition[2],
+                                       _tempLaserSensorOrientation[0],
+                                       _tempLaserSensorOrientation[1],
+                                       _tempLaserSensorOrientation[2]);
+
+}
+

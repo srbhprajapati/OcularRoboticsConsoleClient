@@ -62,6 +62,10 @@ void UdpReceiver::readPendingDatagrams()
         {
             emit ackRegionScan();
         }
+        else if(packetHeader.compare("EACHLP")==0)
+        {
+                emit ackLaserSensorPosition();
+        }
         else
         {
             parseDatagram(datagram);
@@ -97,9 +101,9 @@ void UdpReceiver::parseDatagram(QByteArray datagram)
 
 
 
-        if(i==37)
-        {
-            qDebug()<<"Point : "<<x<<" "<<y<<" "<<z;
-        }
+//        if(i==37)
+//        {
+//            qDebug()<<"Point : "<<x<<" "<<y<<" "<<z;
+//        }
     }
 }

@@ -73,7 +73,11 @@ private slots:
     //Acknowledgement for Region Scan Mode
     void ackRegionScan();
 
+    //Acknowledgement for Laser Sensor Position
+    void ackLaserSensorPosition();
 
+
+    void on_LaserPositionButton_clicked();
 
 private:
 
@@ -117,7 +121,11 @@ private:
     float _rAngular;
     float _tempRAngular;
 
-    float _laserSensorPosition[3];
+    float _laserSensorPosition[3]; // X, Y, Z
+    float _tempLaserSensorPosition[3];
+
+    float _laserSensorOrientation[3]; //Roll, Pitch, Yaw
+    float _tempLaserSensorOrientation[3];
 };
 
 #endif // MAINWINDOW_H

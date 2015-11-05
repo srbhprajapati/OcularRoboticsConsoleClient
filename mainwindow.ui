@@ -10,6 +10,18 @@
     <height>704</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>397</width>
+    <height>704</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
@@ -24,7 +36,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>     --</string>
     </property>
    </widget>
    <widget class="QLabel" name="LaserZValueLabel">
@@ -37,7 +49,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>     --</string>
     </property>
    </widget>
    <widget class="QLabel" name="AzimuthLabel">
@@ -63,7 +75,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>     --</string>
     </property>
    </widget>
    <widget class="QLabel" name="LaserXValueLabel">
@@ -76,13 +88,13 @@
      </rect>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>     --</string>
     </property>
    </widget>
    <widget class="QLabel" name="ModeLabel">
     <property name="geometry">
      <rect>
-      <x>220</x>
+      <x>210</x>
       <y>160</y>
       <width>61</width>
       <height>16</height>
@@ -102,13 +114,13 @@
      </rect>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>     --</string>
     </property>
    </widget>
    <widget class="QLabel" name="camZLabel">
     <property name="geometry">
      <rect>
-      <x>220</x>
+      <x>210</x>
       <y>130</y>
       <width>61</width>
       <height>16</height>
@@ -128,13 +140,13 @@
      </rect>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>     --</string>
     </property>
    </widget>
    <widget class="QLabel" name="camYLabel">
     <property name="geometry">
      <rect>
-      <x>220</x>
+      <x>210</x>
       <y>100</y>
       <width>61</width>
       <height>16</height>
@@ -147,7 +159,7 @@
    <widget class="QLabel" name="statusLabel">
     <property name="geometry">
      <rect>
-      <x>220</x>
+      <x>210</x>
       <y>190</y>
       <width>71</width>
       <height>16</height>
@@ -180,13 +192,13 @@
      </rect>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>     --</string>
     </property>
    </widget>
    <widget class="QLabel" name="camXLabel">
     <property name="geometry">
      <rect>
-      <x>220</x>
+      <x>210</x>
       <y>70</y>
       <width>61</width>
       <height>16</height>
@@ -206,7 +218,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>     --</string>
     </property>
    </widget>
    <widget class="QLabel" name="scanLineLabel">
@@ -245,7 +257,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>     --</string>
     </property>
    </widget>
    <widget class="QLabel" name="Heading">
@@ -256,6 +268,12 @@
       <width>261</width>
       <height>31</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
     </property>
     <property name="font">
      <font>
@@ -285,7 +303,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>     --</string>
     </property>
    </widget>
    <widget class="QLabel" name="PointsPerScan">
@@ -310,6 +328,12 @@
       <height>211</height>
      </rect>
     </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
     <property name="currentIndex">
      <number>1</number>
     </property>
@@ -326,6 +350,12 @@
         <height>23</height>
        </rect>
       </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="text">
        <string>Start Laser</string>
       </property>
@@ -338,6 +368,12 @@
         <width>75</width>
         <height>23</height>
        </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
       </property>
       <property name="text">
        <string>Stop Laser</string>
@@ -379,7 +415,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>10000</string>
+       <string>5</string>
       </property>
      </widget>
      <widget class="QLabel" name="ScanLineFullScanLabel">
@@ -409,6 +445,12 @@
         <height>23</height>
        </rect>
       </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="text">
        <string>Update</string>
       </property>
@@ -436,7 +478,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Laser Xv :</string>
+       <string>Roll :</string>
       </property>
      </widget>
      <widget class="QLabel" name="laserYLabel">
@@ -462,7 +504,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Laser Yv :</string>
+       <string>Pitch :</string>
       </property>
      </widget>
      <widget class="QLabel" name="laserZLabel">
@@ -488,7 +530,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Laser Zv :</string>
+       <string>Yaw :</string>
       </property>
      </widget>
      <widget class="QDoubleSpinBox" name="LaserXSpinBox">
@@ -528,6 +570,9 @@
       <property name="maximum">
        <double>1000.000000000000000</double>
       </property>
+      <property name="value">
+       <double>2.000000000000000</double>
+      </property>
      </widget>
      <widget class="QDoubleSpinBox" name="LaserZSpinBox">
       <property name="geometry">
@@ -548,7 +593,7 @@
        <double>1000.000000000000000</double>
       </property>
      </widget>
-     <widget class="QDoubleSpinBox" name="LaserXvSpinBox">
+     <widget class="QDoubleSpinBox" name="RollSpinBox">
       <property name="geometry">
        <rect>
         <x>240</x>
@@ -564,10 +609,10 @@
        <double>0.000000000000000</double>
       </property>
       <property name="maximum">
-       <double>1000.000000000000000</double>
+       <double>360.000000000000000</double>
       </property>
      </widget>
-     <widget class="QDoubleSpinBox" name="LaserYvSpinBox">
+     <widget class="QDoubleSpinBox" name="PitchSpinBox">
       <property name="geometry">
        <rect>
         <x>240</x>
@@ -583,10 +628,13 @@
        <double>0.000000000000000</double>
       </property>
       <property name="maximum">
-       <double>1000.000000000000000</double>
+       <double>360.000000000000000</double>
+      </property>
+      <property name="value">
+       <double>57.000000000000000</double>
       </property>
      </widget>
-     <widget class="QDoubleSpinBox" name="LaserZvSpinBox">
+     <widget class="QDoubleSpinBox" name="YawSpinBox">
       <property name="geometry">
        <rect>
         <x>240</x>
@@ -602,7 +650,7 @@
        <double>0.000000000000000</double>
       </property>
       <property name="maximum">
-       <double>1000.000000000000000</double>
+       <double>360.000000000000000</double>
       </property>
      </widget>
     </widget>
@@ -617,7 +665,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="fullScanTab">
      <attribute name="title">
@@ -681,7 +729,7 @@
        <number>15</number>
       </property>
       <property name="value">
-       <number>10</number>
+       <number>5</number>
       </property>
      </widget>
      <widget class="QSpinBox" name="scanLineSpinBox">
@@ -703,7 +751,7 @@
        <number>10000</number>
       </property>
       <property name="value">
-       <number>10</number>
+       <number>64</number>
       </property>
      </widget>
     </widget>
@@ -875,10 +923,10 @@ Right :</string>
        <enum>QAbstractSpinBox::NoButtons</enum>
       </property>
       <property name="minimum">
-       <double>-45.000000000000000</double>
+       <double>-35.000000000000000</double>
       </property>
       <property name="maximum">
-       <double>45.000000000000000</double>
+       <double>35.000000000000000</double>
       </property>
      </widget>
      <widget class="QDoubleSpinBox" name="LowerBoundRegionSpinBox">
@@ -894,10 +942,10 @@ Right :</string>
        <enum>QAbstractSpinBox::NoButtons</enum>
       </property>
       <property name="minimum">
-       <double>-45.000000000000000</double>
+       <double>-35.000000000000000</double>
       </property>
       <property name="maximum">
-       <double>45.000000000000000</double>
+       <double>35.000000000000000</double>
       </property>
      </widget>
      <widget class="QDoubleSpinBox" name="AngularLeftSpinBox">

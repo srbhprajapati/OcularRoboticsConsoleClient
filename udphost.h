@@ -25,6 +25,9 @@ class UdpHost : public QObject
         //Sends datagram for starting the laser sensor simulator
         bool runLaserSensor(int Azimuthal_value, int Scanline_value);
 
+        //Sends the new position of the Sensor
+        bool setLaserSensorPosition(float x, float y, float z, float roll, float pitch, float yaw);
+
         //Sends datagram for stopping the sensor
         bool stopLaserSensor();
 
