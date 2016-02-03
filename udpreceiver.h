@@ -1,6 +1,8 @@
 #ifndef UDPRECEIVER_H
 #define UDPRECEIVER_H
 
+#include <cmath>
+
 #include <QtNetwork/QUdpSocket>
 
 #define RECEIVING_PORT 1235

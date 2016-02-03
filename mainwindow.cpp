@@ -199,11 +199,11 @@ void MainWindow::ackRunLaser()
 
     //Scan Mode for the Sensor
     ui->scanModeValueLabel->setText(QString("FS"));
-    _sensorScanMode = SCAN_MODE::FULL_FIELD_SCAN;
+    _sensorScanMode = FULL_FIELD_SCAN;
 
     //Laser Sensor Status
     ui->LaserStatusLabel->setText(QString("ON"));
-    _sensorStatus = LASER_STATUS::ON;
+    _sensorStatus = ON;
 
 }
 
@@ -211,7 +211,7 @@ void MainWindow::ackStopLaser()
 {
     //Set Value to Other Text Labels
     ui->LaserStatusLabel->setText(QString("OFF"));
-    _sensorStatus = LASER_STATUS::OFF;
+    _sensorStatus = OFF;
 }
 
 void MainWindow::ackFullScanMode()
@@ -222,7 +222,7 @@ void MainWindow::ackFullScanMode()
 
     //Set Value to Other Text Labels
     ui->scanModeValueLabel->setText(QString("FS"));
-    _sensorScanMode = SCAN_MODE::FULL_FIELD_SCAN;
+    _sensorScanMode = FULL_FIELD_SCAN;
 
     ui->AzimuthalFullScanLabel->setText(QString::number(_tempAzimuthalFrequency));
     ui->AzimuthalFreqLabel->setText(QString::number(_tempAzimuthalFrequency));
@@ -241,7 +241,7 @@ void MainWindow::ackBoundedElevation()
 
     //Set Value to Other Text Labels
     ui->scanModeValueLabel->setText(QString("BES"));
-    _sensorScanMode = SCAN_MODE::BOUNDED_ELEVATION_SCAN;
+    _sensorScanMode = BOUNDED_ELEVATION_SCAN;
 
 }
 
@@ -257,7 +257,7 @@ void MainWindow::ackRegionScan()
 
     //Set Value to Other Text Labels
     ui->scanModeValueLabel->setText(QString("RS"));
-    _sensorScanMode = SCAN_MODE::REGION_SCAN;
+    _sensorScanMode = REGION_SCAN;
 }
 
 void MainWindow::ackLaserSensorPosition()
